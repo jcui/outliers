@@ -1,8 +1,11 @@
-class ThresholdOutOfRangeException(ValueError):
+class ServiceArgumentException(ValueError):
     pass
 
-class ThresholdNotAnIntegerException(ValueError):
+class ThresholdOutOfRangeException(ServiceArgumentException):
     pass
 
-class ClusterNotFoundException(ValueError):
+class ThresholdNotAnIntegerException(ServiceArgumentException):
+    pass
+
+class ClusterNotFoundException(ServiceArgumentException):
     pass
