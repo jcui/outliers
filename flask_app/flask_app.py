@@ -1,5 +1,5 @@
 from flask import (Flask, abort, request)
-from service import outliers_service
+from service import service
 
 app = Flask(__name__)
 
@@ -15,21 +15,21 @@ def abort_not_found(message):
 
 def get_threshold(threshold):
     try:
-        return outliers_service.get_threshold(threshold)
-    except outliers_service.ThresholdOutOfRangeException as e:
+        return service.get_threshold(threshold)
+    except service.ThresholdOutOfRangeException as e:
         abort_bad_request(e.message)
-    except outliers_service.ThresholdNotAnIntegerException as e:
+    except service.ThresholdNotAnIntegerException as e:
         abort_bad_request(e.message)
 
 @app.route('/clusters/caches/outliers')
 def get_all_outliers():
     threshold = get_threshold(request.args.get('threshold'))
-    return outliers_service.get_all_outliers(threshold)
+    return service.get_all_outliers(threshold)
 
 @app.route('/clusters/<cluster>/caches/outliers')
 def get_cluster_outliers(cluster):
     threshold = get_threshold(request.args.get('threshold'))
     try:
-        return outliers_service.get_cluster_outliers(cluster, threshold)
-    except outliers_service.ClusterNotFoundException as e:
+        return service.get_cluster_outliers(cluster, threshold)
+    except service.ClusterNotFoundException as e:
         abort_not_found(e.message)
