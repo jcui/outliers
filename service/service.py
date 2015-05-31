@@ -1,11 +1,12 @@
 from caches import caches
+
 from exceptions import (ClusterNotFoundException,
                         CachesRequestFailedException,
                         ThresholdNotAnIntegerException,
                         ThresholdOutOfRangeException)
 
 def get_default_threshold():
-    # todo: check configuration for default threshold.
+    # todo: check configuration for default threshold,
     #       can be set using api call.
     DEFAULT_THRESHOLD = 20
     return DEFAULT_THRESHOLD
@@ -39,12 +40,15 @@ def get_caches_throughput():
     except caches.RequestFailedException as e:
         raise CachesRequestFailedException(e.message)
 
+def find_outliers(caches_in_cluster, all_caches_throughput, threshold):
+    pass
+
 def get_cluster_outliers(cluster, threshold):
     caches_by_cluster = get_caches_by_cluster()
     if cluster not in caches_by_cluster:
         raise ClusterNotFoundException(
             'cluster "%s" does not exist' % cluster)
-    caches_throughput = get_caches_throughput()
+    all_caches_throughput = get_caches_throughput()
     return 'cluster %s threshold %d' % (cluster, threshold)
 
 def get_all_outliers(threshold):
