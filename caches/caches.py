@@ -10,7 +10,7 @@ def get_with_error_checking(url):
         response = requests.get(url)
         response.raise_for_status()
         return response
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         raise RequestFailedException(
             str(response.status_code) + ': ' + url)
 
@@ -21,7 +21,7 @@ def dict_of_lists(json_list, key, value):
     return result
 
 def dict_of_items(json_list, key, value):
-    return { json[key] : json[value] for json in json_list }
+    return {json[key] : json[value] for json in json_list}
 
 def get_caches_by_cluster():
     # todo: do not need to rebuild this dict for each request.
