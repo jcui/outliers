@@ -17,11 +17,14 @@ def get_with_error_checking(url):
 def dict_of_lists(json_list, key, value):
     result = defaultdict(list)
     for json in json_list:
-        result[json[key]].append(json[value])
+        if key in json and value in json:
+            result[json[key]].append(json[value])
     return result
 
 def dict_of_items(json_list, key, value):
-    return {json[key] : json[value] for json in json_list}
+    return {json[key] : json[value]
+            for json in json_list
+            if key in json and value in json}
 
 def get_caches_by_cluster():
     # todo: do not need to rebuild this dict for each request.
