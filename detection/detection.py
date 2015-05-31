@@ -22,6 +22,6 @@ def find_outliers(caches_in_cluster, all_caches_throughput, threshold):
     if (len(caches_throughput) > 0):
         cluster_average = sum(caches_throughput.values()) / len(caches_throughput)
         outliers_throughput = get_outliers_throughput(caches_throughput,
-                                                      average,
+                                                      cluster_average,
                                                       threshold)
     return Outliers(outliers_throughput, cluster_average)

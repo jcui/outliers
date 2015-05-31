@@ -28,7 +28,7 @@ def dict_of_items(json_list, key, value):
 
 def get_caches_by_cluster():
     # todo: if caches/clusters do not change often, can save result
-    #       in thread-safe structure, refresh at intervals.
+    #       in thread-safe structure/db, refresh at intervals.
     response = get_with_error_checking(CACHES_BASE_URL)
     return dict_of_lists(response.json(), 'cluster', 'uuid')
 
