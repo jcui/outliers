@@ -32,6 +32,6 @@ def get_caches_by_cluster():
     response = get_with_error_checking(CACHES_BASE_URL)
     return make_dict_of_lists(response.json(), 'cluster', 'uuid')
 
-def get_caches_throughput():
+def get_cache_throughputs():
     response = get_with_error_checking(CACHES_BASE_URL + 'throughput')
     return make_dict_of_items(response.json(), 'uuid', 'value')

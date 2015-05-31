@@ -5,20 +5,20 @@ def is_outlier(throughput, average, threshold):
     return average > 0.00000000001 and \
            (abs(throughput - average) / float(average)) > (threshold / 100.0)
 
-def find_outliers_throughput(caches_throughput, average, threshold):
+def find_outlier_throughputs(cache_throughputs, average, threshold):
     return {uuid : throughput
-            for uuid, throughput in caches_throughput.iteritems()
+            for uuid, throughput in cache_throughputs.iteritems()
             if is_outlier(throughput, average, threshold)}
 
-def find_outliers(cluster_caches, all_caches_throughput, threshold):
-    caches_throughput = make_dict_subset(cluster_caches,
-                                         all_caches_throughput)
+def find_outliers(cluster_caches, all_cache_throughputs, threshold):
+    cache_throughputs = make_dict_subset(cluster_caches,
+                                         all_cache_throughputs)
     cluster_average = 0
-    outliers_throughput = {}
-    if len(caches_throughput) > 0:
+    outlier_throughputs = {}
+    if len(cache_throughputs) > 0:
         cluster_average = \
-            sum(caches_throughput.values()) / len(caches_throughput)
-        outliers_throughput = find_outliers_throughput(caches_throughput,
+            sum(cache_throughputs.values()) / len(cache_throughputs)
+        outlier_throughputs = find_outlier_throughputs(cache_throughputs,
                                                        cluster_average,
                                                        threshold)
-    return (outliers_throughput, cluster_average)
+    return (outlier_throughputs, cluster_average)

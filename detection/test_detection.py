@@ -34,7 +34,7 @@ class TestDetection(unittest.TestCase):
 
     def check_outliers_found(self, input_dict, threshold):
         average = sum(input_dict.values()) / len(input_dict)
-        result_dict = detection.find_outliers_throughput(input_dict,
+        result_dict = detection.find_outlier_throughputs(input_dict,
                                                          average,
                                                          threshold)
         for key, value in input_dict.iteritems():
@@ -43,7 +43,7 @@ class TestDetection(unittest.TestCase):
             else:
                 self.assertFalse(detection.is_outlier(value, average, threshold))
 
-    def test_find_outliers_throughput(self):
+    def test_find_outlier_throughputs(self):
         input_dict = {'a' : 10}
         self.check_outliers_found(input_dict, 20)
         input_dict = {'a' : 10, 'b' : 8}

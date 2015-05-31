@@ -34,9 +34,9 @@ def get_caches_by_cluster():
     except caches.RequestFailedException as e:
         raise CachesRequestFailedException(e.message)
 
-def get_caches_throughput():
+def get_cache_throughputs():
     try:
-        return caches.get_caches_throughput()
+        return caches.get_cache_throughputs()
     except caches.RequestFailedException as e:
         raise CachesRequestFailedException(e.message)
 
@@ -45,10 +45,22 @@ def get_cluster_outliers(cluster, threshold):
     if cluster not in caches_by_cluster:
         raise ClusterNotFoundException(
             'cluster "%s" does not exist' % cluster)
-    all_caches_throughput = get_caches_throughput()
+    all_cache_throughputs = get_cache_throughputs()
     return detection.find_outliers(caches_by_cluster[cluster],
-                                   all_caches_throughput,
+                                   all_cache_throughputs,
                                    threshold)
 
 def get_all_outliers(threshold):
-    return 'threshold  %d' % threshold
+    caches_by_cluster = get_caches_by_cluster()
+    all_cache_throughputs = get_cache_throughputs()
+    all_outliers = []
+    for cluster, cluster_caches in caches_by_cluster.iteritems():
+        outlier_throughputs, cluster_average = \
+            detection.find_outliers(cluster_caches,
+                                    all_cache_throughputs,
+                                    threshold)
+        if len(outlier_throughputs) > 0:
+            all_outliers.append((cluster,
+                                 outlier_throughputs,
+                                 cluster_average))
+    return all_outliers
