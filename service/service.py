@@ -1,5 +1,5 @@
 from caches import caches
-
+from detection import detection
 from exceptions import (ClusterNotFoundException,
                         CachesRequestFailedException,
                         ThresholdNotAnIntegerException,
@@ -40,16 +40,15 @@ def get_caches_throughput():
     except caches.RequestFailedException as e:
         raise CachesRequestFailedException(e.message)
 
-def find_outliers(caches_in_cluster, all_caches_throughput, threshold):
-    pass
-
 def get_cluster_outliers(cluster, threshold):
     caches_by_cluster = get_caches_by_cluster()
     if cluster not in caches_by_cluster:
         raise ClusterNotFoundException(
             'cluster "%s" does not exist' % cluster)
     all_caches_throughput = get_caches_throughput()
-    return 'cluster %s threshold %d' % (cluster, threshold)
+    return detection.find_outliers(caches_by_cluster[cluster],
+                                   all_caches_throughput,
+                                   threshold)
 
 def get_all_outliers(threshold):
     return 'threshold  %d' % threshold

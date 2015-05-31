@@ -1,7 +1,3 @@
-from collections import namedtuple
-
-Outliers = namedtuple('Outliers', 'outliers_throughput cluster_average')
-
 def dict_subset(key_list, input_dict):
     return {key : input_dict[key] for key in key_list if key in input_dict}
 
@@ -25,4 +21,4 @@ def find_outliers(caches_in_cluster, all_caches_throughput, threshold):
         outliers_throughput = get_outliers_throughput(caches_throughput,
                                                       cluster_average,
                                                       threshold)
-    return Outliers(outliers_throughput, cluster_average)
+    return (outliers_throughput, cluster_average)
