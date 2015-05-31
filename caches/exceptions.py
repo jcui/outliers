@@ -1,5 +1,5 @@
 class CachesException(Exception):
     pass
 
-class QueryFailedException(CachesException):
+class RequestFailedException(CachesException):
     pass

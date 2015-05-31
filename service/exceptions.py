@@ -16,5 +16,5 @@ class ThresholdNotAnIntegerException(ServiceArgumentException):
 class ClusterNotFoundException(ServiceArgumentException):
     pass
 
-class QueryCachesFailedException(ServiceFailedException):
+class CachesRequestFailedException(ServiceFailedException):
     pass
