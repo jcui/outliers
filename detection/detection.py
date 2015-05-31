@@ -1,5 +1,5 @@
-def make_dict_subset(key_list, input_dict):
-    return {key : input_dict[key] for key in key_list if key in input_dict}
+def make_dict_subset(keys, input_dict):
+    return {key : input_dict[key] for key in keys if key in input_dict}
 
 def is_outlier(throughput, average, threshold):
     return average > 0.00000000001 and \

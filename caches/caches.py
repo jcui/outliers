@@ -14,16 +14,16 @@ def get_with_error_checking(url):
         raise RequestFailedException(
             str(response.status_code) + ': ' + url)
 
-def make_dict_of_lists(json_list, key, value):
+def make_dict_of_lists(jsons, key, value):
     result = defaultdict(list)
-    for json in json_list:
+    for json in jsons:
         if key in json and value in json:
             result[json[key]].append(json[value])
     return result
 
-def make_dict_of_items(json_list, key, value):
+def make_dict_of_items(jsons, key, value):
     return {json[key] : json[value]
-            for json in json_list
+            for json in jsons
             if key in json and value in json}
 
 def get_caches_by_cluster():
