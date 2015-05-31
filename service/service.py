@@ -1,6 +1,8 @@
 from exceptions import (ClusterNotFoundException,
+                        QueryCachesFailedException,
                         ThresholdNotAnIntegerException,
                         ThresholdOutOfRangeException)
+from caches import caches
 
 def get_default_threshold():
     # todo: check configuration for default threshold
@@ -23,14 +25,18 @@ def get_threshold(threshold):
     else:
         return validate_threshold(threshold)
 
-def get_all_outliers(threshold):
-    return 'threshold  %d' % threshold
-
-def cluster_exists(cluster):
-    return False
+def get_caches_by_cluster():
+    try:
+        return caches.get_caches_by_cluster()
+    except caches.QueryFailedException as e:
+        raise QueryCachesFailedException(e.message)
 
 def get_cluster_outliers(cluster, threshold):
-    if not cluster_exists(cluster):
+    caches_by_cluster = get_caches_by_cluster()
+    if cluster not in caches_by_cluster:
         raise ClusterNotFoundException(
             'cluster "%s" does not exist' % cluster)
     return 'cluster %s threshold %d' % (cluster, threshold)
+
+def get_all_outliers(threshold):
+    return 'threshold  %d' % threshold
