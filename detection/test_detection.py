@@ -66,7 +66,42 @@ class TestDetection(unittest.TestCase):
         self.check_outliers_found(input_dict, 99)
 
     def test_find_outliers(self):
-        pass
+        self.assertEqual(detection.Outliers({}, 0),
+                         detection.find_outliers([],
+                                                 {},
+                                                 20))
+        self.assertEqual(detection.Outliers({}, 10),
+                         detection.find_outliers(['a'],
+                                                 {'a' : 10},
+                                                 20))
+        self.assertEqual(detection.Outliers({}, 8),
+                         detection.find_outliers(['a', 'b', 'c'],
+                                                 {'a' : 10, 'b' : 8, 'c' : 6},
+                                                 40))
+        self.assertEqual(detection.Outliers({'a' : 10, 'c' : 6}, 8),
+                         detection.find_outliers(['a', 'b', 'c'],
+                                                 {'a' : 10, 'b' : 8, 'c' : 6},
+                                                 20))
+        self.assertEqual(detection.Outliers({'a' : 10, 'b' : 5, 'c' : 3}, 6),
+                         detection.find_outliers(['a', 'b', 'c'],
+                                                 {'a' : 10, 'b' : 5, 'c' : 3},
+                                                 10))
+        self.assertEqual(detection.Outliers({'a' : 10, 'c' : 3}, 6),
+                         detection.find_outliers(['a', 'b', 'c'],
+                                                 {'a' : 10, 'b' : 5, 'c' : 3},
+                                                 20))
+        self.assertEqual(detection.Outliers({'a' : 10}, 6),
+                         detection.find_outliers(['a', 'b', 'c'],
+                                                 {'a' : 10, 'b' : 5, 'c' : 3},
+                                                 60))
+        self.assertEqual(detection.Outliers({}, 6),
+                         detection.find_outliers(['a', 'b', 'c'],
+                                                 {'a' : 10, 'b' : 5, 'c' : 3},
+                                                 80))
+        self.assertEqual(detection.Outliers({'b' : 8, 'c' : 6}, 7),
+                         detection.find_outliers(['c', 'b', 'x'],
+                                                 {'a' : 10, 'b' : 8, 'c' : 6},
+                                                 5))
 
 if __name__ == '__main__':
     unittest.main()
