@@ -9,7 +9,6 @@ curl_opts=
 usage()
 {
   echo "usage: ${name} [-h] [-c <cluster>] [-t <threshold %>]"
-  echo
 }
 
 while [[ $# > 0 ]]

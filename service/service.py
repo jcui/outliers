@@ -6,8 +6,8 @@ from exceptions import (ClusterNotFoundException,
                         ThresholdOutOfRangeException)
 
 def get_default_threshold():
-    # todo: check configuration for default threshold,
-    #       can be set using api call.
+    # todo: check configuration for default,
+    #       can be set with api call.
     DEFAULT_THRESHOLD = 20
     return DEFAULT_THRESHOLD
 

@@ -6,7 +6,7 @@ Start server:
     bash ./start.sh
 
 Find outliers:
-    bash ./outliers.sh [-c <cluster>] [-t <threshold %>]
+    bash ./outliers.sh [-h] [-c <cluster>] [-t <threshold %>]
 
 **********
 
@@ -23,7 +23,7 @@ API:
 Code structure:
     flask_app               web service
         \ service           used by web service
-            \ caches        info about caches
+            \ caches        details about caches
             \ detection     outlier detection logic
 
 Notes:
@@ -46,7 +46,7 @@ Notes:
     - For more complex metrics, we could try to parallelize the computation,
       either with multithreading or by distributing it across machines.
 4. To persist a given threshold for future calls, we could introduce a
-   configuration API, e.g.:
+   configuration API:
         /v1/clusters/caches/outliers/configuration/
         /v1/clusters/<cluster>/caches/outliers/configuration/
     - The configuration could include other metrics in addition to the threshold.
