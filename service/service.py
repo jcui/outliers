@@ -17,9 +17,9 @@ def validate_threshold(threshold):
     except ValueError:
         raise ThresholdNotAnIntegerException(
             'outlier threshold must be an integer')
-    if threshold <= 0 or threshold >= 100:
+    if threshold <= 0:
         raise ThresholdOutOfRangeException(
-            'outlier threshold must be between 1% and 99%')
+            'outlier threshold must be at least 1')
     return threshold
 
 def get_valid_threshold(threshold):

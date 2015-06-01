@@ -3,7 +3,8 @@ from service import service
 
 app = Flask(__name__)
 
-OUTLIER_DESCRIPTION = 'outlier throughput exceeds average by threshold %'
+OUTLIER_DESCRIPTION = \
+    'outlier throughputs differ from average by more than threshold %'
 
 def run(debug):
     app.debug = debug
@@ -38,7 +39,7 @@ def make_response_dict(cluster,
             'outliers' : serialize_outliers(outlier_throughputs),
             'averageThroughput' : cluster_average,
             'threshold' : threshold,
-            'message' : OUTLIER_DESCRIPTION}
+            'description' : OUTLIER_DESCRIPTION}
 
 def make_json_response(content):
     return Response(json.dumps(content, indent=2),

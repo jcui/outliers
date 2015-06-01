@@ -11,8 +11,7 @@ def get_with_error_checking(url):
         response.raise_for_status()
         return response
     except requests.exceptions.RequestException:
-        raise RequestFailedException(
-            str(response.status_code) + ': ' + url)
+        raise RequestFailedException(url)
 
 def make_dict_of_lists(jsons, key, value):
     result = defaultdict(list)
