@@ -3,3 +3,4 @@ class CachesException(Exception):
 
 class RequestFailedException(CachesException):
     pass
+

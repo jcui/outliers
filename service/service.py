@@ -64,3 +64,4 @@ def get_all_outliers(threshold):
                                  outlier_throughputs,
                                  cluster_average))
     return all_outliers
+

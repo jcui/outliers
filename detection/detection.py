@@ -22,3 +22,4 @@ def find_outliers(cluster_caches, all_cache_throughputs, threshold):
                                                        cluster_average,
                                                        threshold)
     return (outlier_throughputs, cluster_average)
+

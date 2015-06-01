@@ -77,3 +77,4 @@ def get_all_outliers():
                                                  cluster_average,
                                                  threshold))
     return make_json_response(response_dicts)
+
