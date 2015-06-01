@@ -9,12 +9,13 @@ curl_opts=
 usage()
 {
   echo "usage: ${name} [-h] [-c <cluster>] [-t <threshold %>]"
+  echo
 }
 
 while [[ $# > 0 ]]
 do
   opt="$1"
-  case $opt in
+  case ${opt} in
     -c)
       cluster="$2"
       shift
