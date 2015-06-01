@@ -1,1 +1,55 @@
-hello
+Using Python 2.7.6
+
+**********
+
+Start server:
+    bash ./start.sh
+
+Find outliers:
+    bash ./outliers.sh [-c <cluster>] [-t <threshold %>]
+
+**********
+
+API:
+
+/v1/clusters/caches/outliers?threshold=<x>
+    - List outliers across all clusters for threshold x (default 20)
+
+/v1/clusters/<cluster>/caches/outliers?threshold=<x>
+    - List outliers in given cluster for threshold x (default 20)
+
+**********
+
+Code structure:
+    flask_app               web service
+        \ service           used by web service
+            \ caches        info about caches
+            \ detection     outlier detection logic
+
+Notes:
+1. For each API call, we get details and throughputs for all caches.
+    - Details are used to build a mapping of clusters to caches in each cluster.
+      Since this may not change often, we could build the mapping once and reuse
+      it, refreshing at intervals.
+    - We get throughputs for all caches even when finding outliers for a given
+      cluster. The cost of processing extra data - given the current data set -
+      seems smaller than the cost of making separate requests for each cache's
+      throughput.
+    - Both these issues could be fixed by having a cluster-level API: one call
+      to get details for all caches in a cluster, one call to get the throughputs.
+      This would be increasingly useful as more caches are added.
+2. We pass unnamed 2- and 3-tuples between modules for simplicity. For larger
+   projects or to return more info, we would probably want a better interface and
+   create classes.
+3. To find outliers, we calculate the average throughput of a cluster, then
+   compare the throughput of each cache in the cluster to the average.
+    - For more complex metrics, we could try to parallelize the computation,
+      either with multiple threads or by distributing it across machines.
+4. To persist a given threshold for future requests, we could introduce a
+   configuration API, e.g.:
+        /v1/clusters/caches/outliers/configuration/
+        /v1/clusters/<cluster>/caches/outliers/configuration/
+    - The configuration could include other metrics in addition to the threshold.
+    - GET returns the current configuration as key-value pairs.
+    - POST with a set of key-value pairs updates the configuration.
+
